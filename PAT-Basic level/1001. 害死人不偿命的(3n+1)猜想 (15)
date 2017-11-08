@@ -25,7 +25,7 @@ CHEN, Yue
 输出样例：
 5
 //代码如下
-```cpp
+```c++
 #include <iostream>
 
 using namespace std;
