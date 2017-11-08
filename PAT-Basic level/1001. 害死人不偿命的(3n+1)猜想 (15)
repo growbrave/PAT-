@@ -27,9 +27,9 @@ CHEN, Yue
 //代码如下
 
 #include <iostream>
-
+```cpp
 using namespace std;
-
+```
 int main()
 {
   int n,count=0;
