@@ -23,3 +23,36 @@ yi san wu
 
 提交代码
 
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+	char a[100],b[5];//a存储输入数据，b存储逆序答案
+	char py[10][5]={"ling","yi","er","san","si","wu","liu","qi","ba","jiu"};//拼音表
+	int sum=0;
+	cin>>a;
+	int i=0;
+	while(a[i]!='\0')//求和
+	{
+		sum+=a[i]-'0';//特别注意，不减0的ASCII值，结果就不正确
+		i++;
+	}
+	int j=0;
+	if(sum==0)//特殊情况，单独处理
+	{
+		b[0]=0;
+	}
+	while(sum!=0)
+	{
+		b[j]=sum%10;
+		sum/=10;
+		++j;
+	}
+	for(int n=j-1;n>0;--n)
+		cout<<py[b[n]]<<" ";
+	cout<<py[b[0]];//输出格式要求，否则可以放在for循环中
+	return 0;
+
+}
