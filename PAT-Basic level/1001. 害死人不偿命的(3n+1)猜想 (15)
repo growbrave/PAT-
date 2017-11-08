@@ -45,6 +45,3 @@ int main()
   cout<<count;
   return 0;
 }
-```java
-public static void main(String[]args){}
-```
