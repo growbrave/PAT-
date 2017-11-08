@@ -25,6 +25,7 @@ CHEN, Yue
 输出样例：
 5
 //代码如下
+···cpp
 #include <iostream>
 
 using namespace std;
@@ -44,3 +45,4 @@ int main()
   cout<<count;
   return 0;
 }
+```cpp
