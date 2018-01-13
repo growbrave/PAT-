@@ -74,3 +74,38 @@ int main()
     cout<<"Account locked"<<endl;
     return 0;
 }
+//一个测试点未通过
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	int cnt;
+	string secret,str;
+	cin>>secret>>cnt;
+	getchar();
+	getline(cin,str);
+	while(str!="#")
+	{
+		--cnt;
+		if(cnt<0)
+		{
+			cout<<"Account locked"<<endl;
+			break;
+		}
+		if(str==secret)
+		{
+			if(cnt>=0)
+				cout<<"Welcome in"<<endl;
+			else
+				cout<<"Account locked"<<endl;
+			break;
+		}
+		else
+			cout<<"Wrong password: "<<str<<endl;
+		getline(cin,str);
+		
+	}
+}
