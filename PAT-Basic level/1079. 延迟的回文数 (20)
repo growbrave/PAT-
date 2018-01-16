@@ -1,0 +1,110 @@
+1079. 延迟的回文数 (20)
+
+时间限制
+400 ms
+内存限制
+65536 kB
+代码长度限制
+8000 B
+判题程序
+Standard
+作者
+CHEN, Yue
+给定一个 k+1 位的正整数 N，写成 ak...a1a0 的形式，其中对所有 i 有 0 <= ai < 10 且 ak > 0。N 被称为一个回文数，当且仅当对所有 i 有 ai = ak-i。
+零也被定义为一个回文数。
+
+非回文数也可以通过一系列操作变出回文数。首先将该数字逆转，再将逆转数与该数相加，如果和还不是一个回文数，就重复这个逆转再相加的操作，直到一个回文数出现。
+如果一个非回文数可以变出回文数，就称这个数为延迟的回文数。（定义翻译自 https://en.wikipedia.org/wiki/Palindromic_number）
+
+给定任意一个正整数，本题要求你找到其变出的那个回文数。
+
+输入格式：
+
+输入在一行中给出一个不超过1000位的正整数。
+
+输出格式：
+
+对给定的整数，一行一行输出其变出回文数的过程。每行格式如下
+
+A + B = C
+其中A是原始的数字，B是A的逆转数，C是它们的和。A从输入的整数开始。重复操作直到C在10步以内变成回文数，这时在一行中输出“C is a palindromic number.”；
+或者如果10步都没能得到回文数，最后就在一行中输出“Not found in 10 iterations.”。
+
+输入样例 1：
+97152
+输出样例 1：
+97152 + 25179 = 122331
+122331 + 133221 = 255552
+255552 is a palindromic number.
+输入样例 2：
+196
+输出样例 2：
+196 + 691 = 887
+887 + 788 = 1675
+1675 + 5761 = 7436
+7436 + 6347 = 13783
+13783 + 38731 = 52514
+52514 + 41525 = 94039
+94039 + 93049 = 187088
+187088 + 880781 = 1067869
+1067869 + 9687601 = 10755470
+10755470 + 07455701 = 18211171
+Not found in 10 iterations.
+
+
+#include <iostream>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+//判断是否是回文串
+bool is_palindromic(string s)
+{
+    string r = s;
+    reverse(r.begin(), r.end());
+    for (int i = 0; i < s.length(); i++) {
+        if (s[i] != r[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+int main()
+{
+    string s;
+    cin >> s;
+    //如果本身即是回文串，那么直接输出即可
+    if (is_palindromic(s)) {
+        cout << s << " is a palindromic number." << endl;
+        return 0;
+    }
+    string r_s = s;
+    reverse(r_s.begin(), r_s.end());
+    for (int i = 0; i < 10; i++) {
+        string result = "";
+        int borrow = 0;//进位
+        for (int j = s.length() - 1; j >= 0; j--) {
+            //模拟加，并有进位
+            int signal_add = (s[j] - '0') + (r_s[j] - '0') + borrow;
+            borrow = signal_add / 10;
+            signal_add = signal_add % 10;
+            result += (signal_add + '0');
+        }
+        //最后一位进位，需要另外考虑
+        if (borrow > 0) {
+            result += ('0' + borrow);
+        }
+        reverse(result.begin(), result.end());//反转后才为正确的result
+        cout << s << " + " << r_s << " = " << result << endl;
+        //判断
+        if (is_palindromic(result)) {
+            cout << result << " is a palindromic number." << endl;
+            return 0;
+        }
+        s = result;
+        r_s = result;
+        reverse(r_s.begin(), r_s.end());//反转
+    }
+    //10次后输出
+    cout << "Not found in 10 iterations." << endl;
+}
